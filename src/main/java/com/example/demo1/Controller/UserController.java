@@ -1,5 +1,6 @@
 package com.example.demo1.Controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo1.common.Result;
 import com.example.demo1.entity.User;
 import com.example.demo1.service.UserService;
@@ -63,4 +64,18 @@ public class UserController {
         userService.removeById(id);
         return Result.success();
     }
+
+    /**
+     * 用户分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page")
+    public Result findPage(@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize) {
+        return Result.success(
+                userService.page(new Page<>(pageNum, pageSize))
+        );
+    }
+
 }
